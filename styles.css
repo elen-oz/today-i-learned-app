@@ -15,6 +15,9 @@ body {
 
 h1 {
   font-size: 42px;
+  line-height: 1;
+  margin-top: 6px;
+
   text-transform: uppercase;
   text-align: center;
   font-family: 'Coiny', Arial, sans-serif;
@@ -26,6 +29,16 @@ ul {
 
 .header {
   margin-bottom: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .fact-form {
@@ -38,11 +51,17 @@ ul {
 .fact {
   font-size: 20px;
   line-height: 1.4;
+  letter-spacing: -1px;
 
   background-color: #44403c;
 
   margin-bottom: 16px;
   padding: 16px 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
 }
 
 .tag {
@@ -50,4 +69,8 @@ ul {
   font-size: 14px;
   font-family: 'Coiny', Arial, sans-serif;
   padding: 3px 10px;
+}
+
+.vote-buttons {
+  margin-left: auto;
 }

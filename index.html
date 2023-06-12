@@ -17,8 +17,10 @@
 
 <body>
   <header class="header">
-    <img src="./logo.png" height="68" width="68" alt="Today I Learned Logo" />
-    <h1>Today I Learned</h1>
+    <div class="logo"><img src="./logo.png" height="68" width="68" alt="Today I Learned Logo" />
+      <h1>Today I Learned</h1>
+    </div>
+
     <button>Share a fact</button>
   </header>
 
@@ -55,10 +57,11 @@
         <li class="fact">
           <p>React is being developed by Meta (formerly facebook)
             <a href="https://opensource.fb.com/" target="_blank">(Sourse)</a>
-            <span class="tag" style="background-color: #3b82f6">#technology#</span>
           </p>
 
-          <div>
+          <span class="tag" style="background-color: #3b82f6">#technology#</span>
+
+          <div class="vote-buttons">
             <button>👍 <strong>24</strong></button>
             <button>🤯 <strong>9</strong></button>
             <button>⛔️ <strong>4</strong></button>
@@ -72,13 +75,28 @@
             fathers had never changed a diaper. Today, that number is down to 3%<a
               href="https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids"
               target="_blank">(Sourse)</a>
-            <span class="tag" style="background-color: #eab308">#society#</span>
           </p>
 
-          <div>
+          <span class="tag" style="background-color: #eab308">#society#</span>
+
+          <div class="vote-buttons">
             <button>👍 <strong>11</strong></button>
             <button>🤯 <strong>2</strong></button>
             <button>⛔️ <strong>0</strong></button>
+          </div>
+        </li>
+
+        <li class="fact">
+          <p>Lisbon is the capital of Portugal<a href="https://en.wikipedia.org/wiki/Lisbon"
+              target="_blank">(Sourse)</a>
+          </p>
+
+          <span class="tag" style="background-color: #eab308">#society#</span>
+
+          <div class="vote-buttons">
+            <button>👍 <strong>5</strong></button>
+            <button>🤯 <strong>0</strong></button>
+            <button>⛔️ <strong>1</strong></button>
           </div>
         </li>
       </ul>
