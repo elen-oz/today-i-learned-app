@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './styles.css';
 
 const initialFacts = [
@@ -44,28 +45,60 @@ const CATEGORIES = [
   { name: 'news', color: '#8b5cf6' },
 ];
 
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <dib>
+      <span style={{ fontSize: '40px' }}>{count}</span>
+      <button
+        onClick={() => setCount((c) => c + 1)}
+        className='btn btn-large'
+      >
+        +1
+      </button>
+    </dib>
+  );
+};
+
 const App = () => {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <>
-      <header className='header'>
-        <div className='logo'>
-          <img
-            src='logo.png'
-            height='68'
-            width='68'
-            alt='Today I Learned Logo'
-          />
-          <h1>Today I Learned</h1>
-        </div>
-
-        <button className='btn btn-large btn-open'>Share a fact</button>
-      </header>
-      <NewFactForm />
+      {showForm && <NewFactForm />}
+      <Header
+        showForm={showForm}
+        setShowForm={setShowForm}
+      />
       <main className='main'>
         <CategoryFilter />
         <FactsList />
       </main>
     </>
+  );
+};
+
+const Header = ({ showForm, setShowForm }) => {
+  return (
+    <header className='header'>
+      <div className='logo'>
+        <img
+          src='logo.png'
+          height='68'
+          width='68'
+          alt='Today I Learned Logo'
+        />
+        <h1>Today I Learned</h1>
+      </div>
+
+      <button
+        onClick={() => setShowForm((show) => !show)}
+        className='btn btn-large btn-open'
+      >
+        {showForm ? 'close' : 'Share a fact'}
+      </button>
+    </header>
   );
 };
 
