@@ -54,7 +54,7 @@ factsList.innerHTML = '';
 loadFacts();
 
 async function loadFacts() {
-  const res = await fetch('https://hwtkikrqvnsrrpkjrytv.supabase.co/rest/v1/facts', {
+  const res = await fetch('https://kwwrlftwvgitbqfsoetw.supabase.co/rest/v1/facts', {
     headers: {
       apikey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3d3JsZnR3dmdpdGJxZnNvZXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY3NjUxMDYsImV4cCI6MjAwMjM0MTEwNn0.paYsqobCay7quMunGtDPaRimPSGfxS1V3ZR8_-CdeU0',
