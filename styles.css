@@ -137,6 +137,10 @@ ul {
 }
 
 /* ------MAIN SECTION------ */
+.hidden {
+  display: none;
+}
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
