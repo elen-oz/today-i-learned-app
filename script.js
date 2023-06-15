@@ -1,29 +1,3 @@
-// console.log('HELLO');
-
-// const btn = document.querySelector('.btn-open');
-// const form = document.querySelector('.fact-form');
-
-// btn.addEventListener('click', () => {
-//   if (form.classList.contains('hidden')) {
-//     form.classList.remove('hidden');
-//     btn.textContent = 'Close';
-//   } else {
-//     form.classList.add('hidden');
-//     btn.textContent = 'Share a fact';
-//   }
-// });
-
-// const res = fetch('https://kwwrlftwvgitbqfsoetw.supabase.co', {
-//   headers: {
-//     apiKey:
-//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3d3JsZnR3dmdpdGJxZnNvZXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY3NjUxMDYsImV4cCI6MjAwMjM0MTEwNn0.paYsqobCay7quMunGtDPaRimPSGfxS1V3ZR8_-CdeU0',
-//     authorization:
-//       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3d3JsZnR3dmdpdGJxZnNvZXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY3NjUxMDYsImV4cCI6MjAwMjM0MTEwNn0.paYsqobCay7quMunGtDPaRimPSGfxS1V3ZR8_-CdeU0',
-//   },
-// });
-
-// ==================
-
 const initialFacts = [
   {
     id: 1,
@@ -80,15 +54,14 @@ factsList.innerHTML = '';
 loadFacts();
 
 async function loadFacts() {
-  const res = await const res = fetch('https://kwwrlftwvgitbqfsoetw.supabase.co', {
+  const res = await fetch('https://hwtkikrqvnsrrpkjrytv.supabase.co/rest/v1/facts', {
     headers: {
-      apiKey:
+      apikey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3d3JsZnR3dmdpdGJxZnNvZXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY3NjUxMDYsImV4cCI6MjAwMjM0MTEwNn0.paYsqobCay7quMunGtDPaRimPSGfxS1V3ZR8_-CdeU0',
       authorization:
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3d3JsZnR3dmdpdGJxZnNvZXR3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY3NjUxMDYsImV4cCI6MjAwMjM0MTEwNn0.paYsqobCay7quMunGtDPaRimPSGfxS1V3ZR8_-CdeU0',
     },
   });
-  
   const data = await res.json();
   // console.log(data);
   // const filteredData = data.filter((fact) => fact.category === "technology");
