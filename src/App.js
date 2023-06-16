@@ -75,7 +75,15 @@ const App = () => {
         .select('*')
         .order('votesInteresting', { ascending: false })
         .limit(1000);
-      setFacts(facts);
+
+      console.log(error);
+
+      if (!error) {
+        setFacts(facts);
+      } else {
+        alert('There was a problem getting data');
+      }
+
       setIsLoading(false);
     };
 
