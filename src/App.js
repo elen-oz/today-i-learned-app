@@ -63,17 +63,23 @@ const Counter = () => {
 
 const App = () => {
   const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState(initialFacts);
 
   return (
     <>
-      {showForm && <NewFactForm />}
       <Header
         showForm={showForm}
         setShowForm={setShowForm}
       />
+      {showForm && (
+        <NewFactForm
+          setFacts={setFacts}
+          setShowForm={setShowForm}
+        />
+      )}
       <main className='main'>
         <CategoryFilter />
-        <FactsList />
+        <FactsList facts={facts} />
       </main>
     </>
   );
@@ -102,7 +108,17 @@ const Header = ({ showForm, setShowForm }) => {
   );
 };
 
-const NewFactForm = () => {
+const isValidHttpUrl = (string) => {
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;
+  }
+  return url.protocol === 'http:' || url.protocol === 'https:';
+};
+
+const NewFactForm = ({ setFacts, setShowForm }) => {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
@@ -111,6 +127,34 @@ const NewFactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(text, source, category);
+
+    //2. Check if data is valid => create a new fact
+    if (text && isValidHttpUrl(source) && category && textLength <= 200) {
+      console.log('there is data');
+    }
+
+    //3. Create a new object
+    const newFact = {
+      id: Math.round(Math.random() * 10000000),
+      text: text,
+      source: source,
+      category: category,
+      votesInteresting: 0,
+      votesMindblowing: 0,
+      votesFalse: 0,
+      createdIn: new Date().getFullYear(),
+    };
+
+    //4. Add the new fact to the UI: add the fact to state
+    setFacts((facts) => [newFact, ...facts]);
+
+    //5. Reset input fields
+    setText('');
+    setCategory('');
+    setSource('');
+
+    //6. Close the form
+    setShowForm(false);
   };
 
   return (
@@ -175,9 +219,7 @@ const CategoryFilter = () => {
   );
 };
 
-const FactsList = () => {
-  const facts = initialFacts;
-
+const FactsList = ({ facts }) => {
   return (
     <section>
       <ul className='facts-list'>
