@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import supabase from './supabase';
+
 import './styles.css';
 
 const initialFacts = [
@@ -35,22 +36,11 @@ const initialFacts = [
   },
 ];
 
-const CATEGORIES = [
-  { name: 'technology', color: '#3b82f6' },
-  { name: 'science', color: '#16a34a' },
-  { name: 'finance', color: '#ef4444' },
-  { name: 'society', color: '#eab308' },
-  { name: 'entertainment', color: '#db2777' },
-  { name: 'health', color: '#14b8a6' },
-  { name: 'history', color: '#f97316' },
-  { name: 'news', color: '#8b5cf6' },
-];
-
 const Counter = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <dib>
+    <div>
       <span style={{ fontSize: '40px' }}>{count}</span>
       <button
         onClick={() => setCount((c) => c + 1)}
@@ -58,7 +48,7 @@ const Counter = () => {
       >
         +1
       </button>
-    </dib>
+    </div>
   );
 };
 
@@ -78,7 +68,7 @@ const App = () => {
         query = query.eq('category', currentCategory);
       }
 
-      let { data: facts, error } = await query
+      const { data: facts, error } = await query
         .order('votesInteresting', { ascending: false })
         .limit(1000);
 
@@ -109,7 +99,14 @@ const App = () => {
       <main className='main'>
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
 
-        {isLoading ? <Loader /> : <FactsList facts={facts} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <FactsList
+            facts={facts}
+            setFacts={setFacts}
+          />
+        )}
       </main>
     </>
   );
@@ -120,6 +117,7 @@ const Loader = () => {
 };
 
 const Header = ({ showForm, setShowForm }) => {
+  const appTitle = 'Today I Learned';
   return (
     <header className='header'>
       <div className='logo'>
@@ -129,7 +127,7 @@ const Header = ({ showForm, setShowForm }) => {
           width='68'
           alt='Today I Learned Logo'
         />
-        <h1>Today I Learned</h1>
+        <h1>{appTitle}</h1>
       </div>
 
       <button
@@ -141,6 +139,17 @@ const Header = ({ showForm, setShowForm }) => {
     </header>
   );
 };
+
+const CATEGORIES = [
+  { name: 'technology', color: '#3b82f6' },
+  { name: 'science', color: '#16a34a' },
+  { name: 'finance', color: '#ef4444' },
+  { name: 'society', color: '#eab308' },
+  { name: 'entertainment', color: '#db2777' },
+  { name: 'health', color: '#14b8a6' },
+  { name: 'history', color: '#f97316' },
+  { name: 'news', color: '#8b5cf6' },
+];
 
 const isValidHttpUrl = (string) => {
   let url;
@@ -184,7 +193,9 @@ const NewFactForm = ({ setFacts, setShowForm }) => {
         .select();
 
       //4. Add the new fact to the UI: add the fact to state
-      setFacts((facts) => [newFact[0], ...facts]);
+      if (!error) {
+        setFacts((facts) => [newFact[0], ...facts]);
+      }
 
       //5. Reset input fields
       setText('');
@@ -268,10 +279,11 @@ const CategoryFilter = ({ setCurrentCategory }) => {
   );
 };
 
-const FactsList = ({ facts }) => {
+const FactsList = ({ facts, setFacts }) => {
   if (facts.length === 0) {
     return <p className='message'>No facts for this category yet. Create the first one!</p>;
   }
+
   return (
     <section>
       <ul className='facts-list'>
@@ -279,6 +291,7 @@ const FactsList = ({ facts }) => {
           <Fact
             key={fact.id}
             fact={fact}
+            setFacts={setFacts}
           />
         ))}
       </ul>
@@ -286,7 +299,22 @@ const FactsList = ({ facts }) => {
   );
 };
 
-const Fact = ({ fact }) => {
+const Fact = ({ fact, setFacts }) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleVote = async (columnName) => {
+    setIsUpdating(true);
+    const { data: updatedFact, error } = await supabase
+      .from('facts')
+      .update({ [columnName]: fact[columnName] + 1 })
+      .eq('id', fact.id)
+      .select();
+    setIsUpdating(false);
+
+    console.log(updatedFact);
+    if (!error) setFacts((facts) => facts.map((f) => (f.id === fact.id ? updatedFact[0] : f)));
+  };
+
   return (
     <li className='fact'>
       <p>
@@ -297,7 +325,7 @@ const Fact = ({ fact }) => {
           target='_blank'
           rel='noreferrer'
         >
-          (Sourse)
+          (Source)
         </a>
       </p>
       <span
@@ -309,9 +337,24 @@ const Fact = ({ fact }) => {
         {fact.category}
       </span>
       <div className='vote-buttons'>
-        <button>👍 {fact.votesInteresting}</button>
-        <button>🤯 {fact.votesMindblowing}</button>
-        <button>⛔️ {fact.votesFalse}</button>
+        <button
+          onClick={() => handleVote('votesInteresting')}
+          disabled={isUpdating}
+        >
+          👍 {fact.votesInteresting}
+        </button>
+        <button
+          onClick={() => handleVote('votesMindblowing')}
+          disabled={isUpdating}
+        >
+          🤯 {fact.votesMindblowing}
+        </button>
+        <button
+          onClick={() => handleVote('votesFalse')}
+          disabled={isUpdating}
+        >
+          ⛔️ {fact.votesFalse}
+        </button>
       </div>
     </li>
   );
