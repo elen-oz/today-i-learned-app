@@ -70,7 +70,11 @@ const App = () => {
   useEffect(() => {
     const getFacts = async () => {
       setIsLoading(true);
-      let { data: facts, error } = await supabase.from('facts').select('*');
+      let { data: facts, error } = await supabase
+        .from('facts')
+        .select('*')
+        .order('votesInteresting', { ascending: false })
+        .limit(1000);
       setFacts(facts);
       setIsLoading(false);
     };
