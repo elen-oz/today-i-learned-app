@@ -141,6 +141,14 @@ ul {
   display: none;
 }
 
+.message {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: 24px;
+}
+
 #root {
   max-width: 1400px;
   margin: 0 auto;

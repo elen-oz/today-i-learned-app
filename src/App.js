@@ -65,11 +65,14 @@ const Counter = () => {
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getFacts = async () => {
+      setIsLoading(true);
       let { data: facts, error } = await supabase.from('facts').select('*');
       setFacts(facts);
+      setIsLoading(false);
     };
 
     getFacts();
@@ -89,10 +92,15 @@ const App = () => {
       )}
       <main className='main'>
         <CategoryFilter />
-        <FactsList facts={facts} />
+
+        {isLoading ? <Loader /> : <FactsList facts={facts} />}
       </main>
     </>
   );
+};
+
+const Loader = () => {
+  return <p className='message'>Loading...</p>;
 };
 
 const Header = ({ showForm, setShowForm }) => {
