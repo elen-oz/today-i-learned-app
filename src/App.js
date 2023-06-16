@@ -66,17 +66,21 @@ const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('all');
 
   useEffect(() => {
     const getFacts = async () => {
       setIsLoading(true);
-      let { data: facts, error } = await supabase
-        .from('facts')
-        .select('*')
+
+      let query = supabase.from('facts').select('*');
+
+      if (currentCategory !== 'all') {
+        query = query.eq('category', currentCategory);
+      }
+
+      let { data: facts, error } = await query
         .order('votesInteresting', { ascending: false })
         .limit(1000);
-
-      console.log(error);
 
       if (!error) {
         setFacts(facts);
@@ -88,7 +92,7 @@ const App = () => {
     };
 
     getFacts();
-  }, []);
+  }, [currentCategory]);
 
   return (
     <>
@@ -103,7 +107,7 @@ const App = () => {
         />
       )}
       <main className='main'>
-        <CategoryFilter />
+        <CategoryFilter setCurrentCategory={setCurrentCategory} />
 
         {isLoading ? <Loader /> : <FactsList facts={facts} />}
       </main>
@@ -224,12 +228,19 @@ const NewFactForm = ({ setFacts, setShowForm }) => {
   );
 };
 
-const CategoryFilter = () => {
+const CategoryFilter = ({ setCurrentCategory }) => {
   return (
     <aside>
       <ul>
         <li className='category'>
-          <button className='btn btn-all-categories'>All</button>
+          <button
+            onClick={() => {
+              setCurrentCategory('all');
+            }}
+            className='btn btn-all-categories'
+          >
+            All
+          </button>
         </li>
         {CATEGORIES.map((item) => (
           <li
@@ -237,6 +248,9 @@ const CategoryFilter = () => {
             className='category'
           >
             <button
+              onClick={() => {
+                setCurrentCategory(item.name);
+              }}
               className='btn btn-category'
               style={{ backgroundColor: item.color }}
             >
@@ -250,6 +264,9 @@ const CategoryFilter = () => {
 };
 
 const FactsList = ({ facts }) => {
+  if (facts.length === 0) {
+    return <p className='message'>No facts for this category yet. Create the first one!</p>;
+  }
   return (
     <section>
       <ul className='facts-list'>
