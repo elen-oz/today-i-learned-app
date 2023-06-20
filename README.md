@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Today I Learned
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Link to the project](https://today-i-learned-app-mauve.vercel.app/)
 
 ## Available Scripts
 
