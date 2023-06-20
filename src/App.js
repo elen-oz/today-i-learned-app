@@ -301,6 +301,7 @@ const FactsList = ({ facts, setFacts }) => {
 
 const Fact = ({ fact, setFacts }) => {
   const [isUpdating, setIsUpdating] = useState(false);
+  const isDisputed = fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
   const handleVote = async (columnName) => {
     setIsUpdating(true);
@@ -318,6 +319,7 @@ const Fact = ({ fact, setFacts }) => {
   return (
     <li className='fact'>
       <p>
+        {isDisputed ? <span className='disputed'>[⛔️ DISPUTED]</span> : null}
         {fact.text}
         <a
           className='source'
