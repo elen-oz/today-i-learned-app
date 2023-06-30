@@ -1,34 +1,29 @@
 # Today I Learned
 
-A web application where you can share interesting facts and vote for others.
-
-Learn something now and don't forget to share some fact, follow the link!
-
 [Link to the project](https://today-i-learned-app-mauve.vercel.app/)
 
-## Available Scripts
+## Project Description
 
-In the project directory, you can run:
+Today I Learned is a web application where users can share interesting facts and vote for others. This project is built with React and uses Supabase for backend services.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Interaction with Supabase**: The application uses Supabase for backend services, providing a seamless experience for data management.
+- **Adding New Facts**: Users can share interesting facts they've learned.
+- **Liking Facts**: Users can vote for facts they find interesting.
+- **Sorting Facts**: Facts can be sorted based on the number of likes they've received, making it easy to find the most popular facts.
+- **Category Filter**: Users can filter facts based on categories, allowing them to focus on topics they're interested in.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Before you start, make sure you have Node.js and npm installed on your machine.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone this repository to your local machine using `https://github.com/elen-oz/today-i-learned-app.git`
+2. Navigate to the project directory: `cd today-i-learned-app`
+3. Install all required dependencies with `npm install`
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run the application in development mode, use the command `npm start`. Open your browser and visit `localhost:3000` to view the application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To build the application for production, use the command `npm run build`. This will create a `build` folder with all the necessary files for deployment.
