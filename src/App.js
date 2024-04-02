@@ -17,7 +17,8 @@ const initialFacts = [
   {
     id: 2,
     text: 'Millennial dads spend 3 times as much time with their kids than their fathers spent with them. In 1982, 43% of fathers had never changed a diaper. Today, that number is down to 3%',
-    source: 'https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids',
+    source:
+      'https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids',
     category: 'society',
     votesInteresting: 11,
     votesMindblowing: 2,
@@ -42,10 +43,7 @@ const Counter = () => {
   return (
     <div>
       <span style={{ fontSize: '40px' }}>{count}</span>
-      <button
-        onClick={() => setCount((c) => c + 1)}
-        className='btn btn-large'
-      >
+      <button onClick={() => setCount((c) => c + 1)} className='btn btn-large'>
         +1
       </button>
     </div>
@@ -86,15 +84,9 @@ const App = () => {
 
   return (
     <>
-      <Header
-        showForm={showForm}
-        setShowForm={setShowForm}
-      />
+      <Header showForm={showForm} setShowForm={setShowForm} />
       {showForm && (
-        <NewFactForm
-          setFacts={setFacts}
-          setShowForm={setShowForm}
-        />
+        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
       )}
       <main className='main'>
         <CategoryFilter setCurrentCategory={setCurrentCategory} />
@@ -102,10 +94,7 @@ const App = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <FactsList
-            facts={facts}
-            setFacts={setFacts}
-          />
+          <FactsList facts={facts} setFacts={setFacts} />
         )}
       </main>
     </>
@@ -113,7 +102,18 @@ const App = () => {
 };
 
 const Loader = () => {
-  return <p className='message'>Loading...</p>;
+  return (
+    <>
+      <p className='message'>Loading...</p>
+      <p className='message'>
+        PS: As I have free access to supabase - due to inactivity for 7 days,
+        they may suspend access to the data base and it will need to be manually
+        resumed. If the fact cards are not displayed on the site, it means that
+        the project is on pause. It is in the process of moving to another
+        platform.
+      </p>
+    </>
+  );
 };
 
 const Header = ({ showForm, setShowForm }) => {
@@ -121,12 +121,7 @@ const Header = ({ showForm, setShowForm }) => {
   return (
     <header className='header'>
       <div className='logo'>
-        <img
-          src='logo.png'
-          height='68'
-          width='68'
-          alt='Today I Learned Logo'
-        />
+        <img src='logo.png' height='68' width='68' alt='Today I Learned Logo' />
         <h1>{appTitle}</h1>
       </div>
 
@@ -208,10 +203,7 @@ const NewFactForm = ({ setFacts, setShowForm }) => {
   };
 
   return (
-    <form
-      className='fact-form'
-      onSubmit={handleSubmit}
-    >
+    <form className='fact-form' onSubmit={handleSubmit}>
       <input
         type='text'
         placeholder='Share a fact with the world...'
@@ -225,16 +217,10 @@ const NewFactForm = ({ setFacts, setShowForm }) => {
         value={source}
         onChange={(e) => setSource(e.target.value)}
       />
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      >
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value=''>Choose category:</option>
         {CATEGORIES.map((item) => (
-          <option
-            key={item.name}
-            value={item.name}
-          >
+          <option key={item.name} value={item.name}>
             {item.name.toUpperCase()}
           </option>
         ))}
@@ -259,10 +245,7 @@ const CategoryFilter = ({ setCurrentCategory }) => {
           </button>
         </li>
         {CATEGORIES.map((item) => (
-          <li
-            key={item.name}
-            className='category'
-          >
+          <li key={item.name} className='category'>
             <button
               onClick={() => {
                 setCurrentCategory(item.name);
@@ -281,18 +264,18 @@ const CategoryFilter = ({ setCurrentCategory }) => {
 
 const FactsList = ({ facts, setFacts }) => {
   if (facts.length === 0) {
-    return <p className='message'>No facts for this category yet. Create the first one!</p>;
+    return (
+      <p className='message'>
+        No facts for this category yet. Create the first one!
+      </p>
+    );
   }
 
   return (
     <section>
       <ul className='facts-list'>
         {facts.map((fact) => (
-          <Fact
-            key={fact.id}
-            fact={fact}
-            setFacts={setFacts}
-          />
+          <Fact key={fact.id} fact={fact} setFacts={setFacts} />
         ))}
       </ul>
     </section>
@@ -301,7 +284,8 @@ const FactsList = ({ facts, setFacts }) => {
 
 const Fact = ({ fact, setFacts }) => {
   const [isUpdating, setIsUpdating] = useState(false);
-  const isDisputed = fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
+  const isDisputed =
+    fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
   const handleVote = async (columnName) => {
     setIsUpdating(true);
@@ -313,7 +297,10 @@ const Fact = ({ fact, setFacts }) => {
     setIsUpdating(false);
 
     console.log(updatedFact);
-    if (!error) setFacts((facts) => facts.map((f) => (f.id === fact.id ? updatedFact[0] : f)));
+    if (!error)
+      setFacts((facts) =>
+        facts.map((f) => (f.id === fact.id ? updatedFact[0] : f))
+      );
   };
 
   return (
@@ -333,7 +320,8 @@ const Fact = ({ fact, setFacts }) => {
       <span
         className='tag'
         style={{
-          backgroundColor: CATEGORIES.find((cat) => cat.name === fact.category).color,
+          backgroundColor: CATEGORIES.find((cat) => cat.name === fact.category)
+            .color,
         }}
       >
         {fact.category}
@@ -351,10 +339,7 @@ const Fact = ({ fact, setFacts }) => {
         >
           🤯 {fact.votesMindblowing}
         </button>
-        <button
-          onClick={() => handleVote('votesFalse')}
-          disabled={isUpdating}
-        >
+        <button onClick={() => handleVote('votesFalse')} disabled={isUpdating}>
           ⛔️ {fact.votesFalse}
         </button>
       </div>
